@@ -1,9 +1,61 @@
 class PlayingCard
-  # initialize
+  attr_reader :rank,:suit, :face
+  def initialize(hash)
+    @rank = hash[:rank]
+    @suit = hash[:suit]
+    @face = @rank + @suit
+
+  end
+  def to_s
+    @face
+  end
+
+
 end
 
+
 class CardDeck
-  # initialize
+  attr_reader :cards
+  def initialize(*args)
+     make_cards
+  end
+
+ def make_cards
+     @cards=[]
+    @RANKS = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
+    @SUITS = ["C", "D", "H", "S"]
+#PlayingCard(rank,siut)
+
+   @RANKS.each do |r|
+     @SUITS.each do |s|
+       @cards.push(PlayingCard.new(suit:s , rank:r))
+      end
+   end
+    return @cards
+
+ end
+
+def shuffle
+  @cards.shuffle!
+end
+
+def draw(*option)
+  len = @cards.length-1
+  if(option[0])
+    from = len-option[0]
+    selected = @cards.pop(option[0])
+    #@cards.delete(selected);
+  else
+    selected = [@cards.last]
+    @cards= @cards[0..len-1]
+  end
+
+  selected
+
+end
+
+
+
 end
 
 class HandOfCards
@@ -13,6 +65,8 @@ end
 class CardPlayer
   # initialize
 end
+
+
 
 
 # Driver Code
